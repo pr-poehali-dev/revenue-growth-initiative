@@ -5,6 +5,16 @@ import { Textarea } from "@/components/ui/textarea";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { BusinessQuiz } from "@/components/BusinessQuiz";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Index = () => {
   const { toast } = useToast();
@@ -14,15 +24,25 @@ const Index = () => {
     phone: "",
     email: "",
     message: "",
+    consent: false,
   });
+  const [showQuiz, setShowQuiz] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.consent) {
+      toast({
+        title: "Необходимо согласие",
+        description: "Пожалуйста, дайте согласие на обработку персональных данных",
+        variant: "destructive",
+      });
+      return;
+    }
     toast({
       title: "Заявка отправлена!",
       description: "Наш менеджер свяжется с вами в ближайшее время.",
     });
-    setFormData({ name: "", company: "", phone: "", email: "", message: "" });
+    setFormData({ name: "", company: "", phone: "", email: "", message: "", consent: false });
   };
 
   const advantages = [
@@ -64,18 +84,42 @@ const Index = () => {
       title: "Смесители для ванной",
       description: "Широкий ассортимент моделей для ванных комнат",
       specs: ["Хром, матовый хром", "Керамический картридж", "Гарантия 5 лет"],
+      category: "EvaGold",
     },
     {
       image: "https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/20a0bd6f-7e6e-450d-85db-2a5d2f24576d.jpg",
-      title: "Душевые стойки",
+      title: "Душевые стойки Premium",
       description: "Премиум-системы с термостатом и тропическим душем",
       specs: ["Тропический душ", "Термостат", "Ручной душ в комплекте"],
+      category: "EvaGold",
     },
     {
-      image: "https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/556ab70e-b772-45c1-a096-2ad165386d63.jpg",
+      image: "https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/c01c888a-5a56-4cea-a568-20e4d1a25277.jpg",
       title: "Кухонные смесители",
       description: "Функциональные решения для профессиональных кухонь",
       specs: ["Выдвижной излив", "Поворот 360°", "Антибактериальное покрытие"],
+      category: "EvaGold",
+    },
+    {
+      image: "https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/23ebbc9e-1814-4d43-b4d4-92aec10e9c0b.jpg",
+      title: "Смесители для умывальника",
+      description: "Современные модели с однорычажным управлением",
+      specs: ["Аэратор экономии воды", "Плавный ход рычага", "Быстрый монтаж"],
+      category: "EvaGold",
+    },
+    {
+      image: "https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/37b3a2e4-6bb3-4af7-90c6-b41e9d66bce4.jpg",
+      title: "Настенные смесители",
+      description: "Минималистичный дизайн для современных ванных",
+      specs: ["Скрытый монтаж", "Регулировка длины излива", "Защита от известкового налета"],
+      category: "EvaGold",
+    },
+    {
+      image: "https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/20a0bd6f-7e6e-450d-85db-2a5d2f24576d.jpg",
+      title: "Душевые системы",
+      description: "Комплексные системы для душевых кабин",
+      specs: ["Верхний душ 250мм", "3 режима душа", "Хромированная сталь"],
+      category: "EvaGold",
     },
   ];
 
@@ -109,6 +153,9 @@ const Index = () => {
             <span className="text-2xl font-bold text-foreground">AquaTech</span>
           </div>
           <nav className="hidden md:flex gap-8">
+            <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">
+              О нас
+            </a>
             <a href="#advantages" className="text-sm font-medium hover:text-primary transition-colors">
               Преимущества
             </a>
@@ -132,6 +179,9 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
+              <div className="inline-block px-4 py-2 bg-accent/10 rounded-full mb-4">
+                <span className="text-sm font-semibold text-accent">EvaGold — 26 лет на рынке</span>
+              </div>
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                 Производство сантехники для <span className="text-primary">B2B</span>
               </h1>
@@ -149,7 +199,7 @@ const Index = () => {
               </div>
               <div className="grid grid-cols-3 gap-6 pt-8">
                 <div>
-                  <div className="text-4xl font-bold text-primary">15+</div>
+                  <div className="text-4xl font-bold text-primary">26</div>
                   <div className="text-sm text-muted-foreground">лет на рынке</div>
                 </div>
                 <div>
@@ -175,7 +225,62 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="advantages" className="py-20 bg-white">
+      <section id="about" className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="inline-block">
+                <span className="text-accent font-bold text-lg">EvaGold</span>
+              </div>
+              <h2 className="text-4xl font-bold">О компании</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                26 лет мы производим и поставляем смесители и душевые системы под собственной 
+                торговой маркой <strong className="text-accent">EvaGold</strong>. Наша продукция — это сочетание 
+                европейского качества и конкурентных цен.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Мы работаем с крупнейшими застройщиками, сетями магазинов и отелями по всей России. 
+                Полный цикл производства, собственные склады и логистика позволяют нам 
+                гарантировать стабильное качество и сроки поставки.
+              </p>
+              <div className="grid grid-cols-2 gap-6 pt-4">
+                <Card className="p-6">
+                  <div className="text-3xl font-bold text-primary mb-2">100%</div>
+                  <div className="text-sm text-muted-foreground">Контроль качества</div>
+                </Card>
+                <Card className="p-6">
+                  <div className="text-3xl font-bold text-primary mb-2">5 лет</div>
+                  <div className="text-sm text-muted-foreground">Гарантия</div>
+                </Card>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <img
+                src="https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/556ab70e-b772-45c1-a096-2ad165386d63.jpg"
+                alt="Продукция EvaGold"
+                className="rounded-lg shadow-lg h-64 w-full object-cover"
+              />
+              <img
+                src="https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/20a0bd6f-7e6e-450d-85db-2a5d2f24576d.jpg"
+                alt="Производство"
+                className="rounded-lg shadow-lg h-64 w-full object-cover mt-8"
+              />
+              <img
+                src="https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/f7e64208-f8a8-45c0-aecf-82c963519f01.jpg"
+                alt="Завод"
+                className="rounded-lg shadow-lg h-64 w-full object-cover"
+              />
+              <img
+                src="https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/c01c888a-5a56-4cea-a568-20e4d1a25277.jpg"
+                alt="Продукция"
+                className="rounded-lg shadow-lg h-64 w-full object-cover mt-8"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="advantages" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Почему выбирают нас</h2>
@@ -202,7 +307,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="products" className="py-20 bg-muted/30">
+      <section id="products" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Наша продукция</h2>
@@ -213,12 +318,15 @@ const Index = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden relative">
                   <img
                     src={product.image}
                     alt={product.title}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute top-4 right-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold">
+                    {product.category}
+                  </div>
                 </div>
                 <CardContent className="pt-6">
                   <h3 className="text-2xl font-bold mb-2">{product.title}</h3>
@@ -241,7 +349,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="cases" className="py-20 bg-white">
+      <section id="cases" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Реализованные проекты</h2>
@@ -276,6 +384,18 @@ const Index = () => {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Пройдите короткий опрос</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Ответьте на 5 вопросов и получите персональное коммерческое предложение
+            </p>
+          </div>
+          <BusinessQuiz />
         </div>
       </section>
 
@@ -375,12 +495,28 @@ const Index = () => {
                     rows={4}
                   />
                 </div>
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="form-consent"
+                    checked={formData.consent}
+                    onCheckedChange={(checked) =>
+                      setFormData({ ...formData, consent: checked as boolean })
+                    }
+                    required
+                  />
+                  <Label
+                    htmlFor="form-consent"
+                    className="text-sm text-muted-foreground leading-tight cursor-pointer"
+                  >
+                    Я даю согласие на обработку персональных данных и соглашаюсь с{" "}
+                    <a href="#" className="text-primary hover:underline">
+                      политикой конфиденциальности
+                    </a>
+                  </Label>
+                </div>
                 <Button type="submit" size="lg" className="w-full">
                   Отправить заявку
                 </Button>
-                <p className="text-xs text-muted-foreground text-center">
-                  Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                </p>
               </form>
             </Card>
           </div>
@@ -410,6 +546,9 @@ const Index = () => {
             <div>
               <h4 className="font-bold mb-4">Навигация</h4>
               <div className="space-y-2">
+                <a href="#about" className="block text-white/80 hover:text-white transition-colors">
+                  О нас
+                </a>
                 <a href="#advantages" className="block text-white/80 hover:text-white transition-colors">
                   Преимущества
                 </a>
