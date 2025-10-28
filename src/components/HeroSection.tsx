@@ -10,12 +10,11 @@ export const HeroSection = () => {
             <div className="inline-block px-4 py-2 bg-accent/10 rounded-full mb-4">
               <span className="text-sm font-semibold text-accent">EvaGold — 26 лет на рынке</span>
             </div>
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-              Производство сантехники для <span className="text-primary">B2B</span>
+            <h1 className="text-5xl lg:text-6xl font-bold leading-tight animate-fade-in">
+              Смесители <span className="text-primary">оптом</span>
             </h1>
-            <p className="text-xl text-muted-foreground">
-              Прямые поставки смесителей и душевых стоек от производителя. Оптовые цены,
-              гарантия качества, техподдержка 24/7.
+            <p className="text-xl text-muted-foreground animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              Прямые поставки смесителей и душевых стоек от производителя. Оптовые цены и гарантия качества.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="text-lg px-8" asChild>
@@ -25,7 +24,7 @@ export const HeroSection = () => {
                 <a href="#products">Каталог продукции</a>
               </Button>
             </div>
-            <div className="grid grid-cols-3 gap-6 pt-8">
+            <div className="grid grid-cols-3 gap-6 pt-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <div>
                 <div className="text-4xl font-bold text-primary">26</div>
                 <div className="text-sm text-muted-foreground">лет на рынке</div>
@@ -40,7 +39,7 @@ export const HeroSection = () => {
               </div>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <Card className="overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow">
               <img
                 src="https://cdn.poehali.dev/projects/308223f4-af7d-44fc-8000-0a7b39e2e02d/files/f7e64208-f8a8-45c0-aecf-82c963519f01.jpg"
